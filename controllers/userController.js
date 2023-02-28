@@ -35,9 +35,14 @@ exports.register = function (req, res) {
 };
 
 exports.home = function (req, res) {
+  // Checking to see is there is a user logged in the session obj
   if (req.session.user) {
+    // Rendering the home-dashboard template and passing thru a username obj
+    // with the current user session username
     res.render("home-dashboard", { username: req.session.user.username });
   } else {
+    // Render the home-guest template if the user does not exist
+    // also passing the errors obj with the errors flash
     res.render("home-guest", { errors: req.flash("errors") });
   }
 };
