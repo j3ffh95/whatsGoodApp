@@ -1,13 +1,17 @@
+// This package is use for hashing passwords - hashing is different to encrypting
 const bcrypt = require("bcryptjs");
 // our db file is exporting the client not the db so that is why we are calling the db() method
 const usersCollection = require("../db").db().collection("users");
+// This package is use for email and also validating other user inputs
 const validator = require("validator");
 
+// Created User class to make a user instance
 let User = function (data) {
   this.data = data;
   this.errors = [];
 };
 
+// User function cleanUp to remove any type of malicious input
 User.prototype.cleanUp = function () {
   if (typeof this.data.username != "string") {
     this.data.username = "";
