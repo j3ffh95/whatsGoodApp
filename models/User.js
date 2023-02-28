@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+// our db file is exporting the client not the db so that is why we are calling the db() method
 const usersCollection = require("../db").db().collection("users");
 const validator = require("validator");
 
