@@ -73,6 +73,8 @@ User.prototype.login = function () {
         ) {
           resolve("Congrats!");
         } else {
+          // if there is no username in the DB and also if the password does not match
+          // the reject with invalide username/password error
           reject("Invalid username / password.");
         }
       })
