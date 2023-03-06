@@ -112,18 +112,23 @@ User.prototype.login = function () {
 };
 
 User.prototype.register = function () {
-  // Step #1: Validate user data
-  this.cleanUp();
-  this.validate();
+  return new Promise(async (resolve, reject) => {
+    // Step #1: Validate user data
+    this.cleanUp();
+    await this.validate();
 
-  // Step #2: Only if there are no validation errors
-  // then save the user data into a database
-  if (!this.errors.length) {
-    // hash user password
-    let salt = bcrypt.genSaltSync(10);
-    this.data.password = bcrypt.hashSync(this.data.password, salt);
-    usersCollection.insertOne(this.data);
-  }
+    // Step #2: Only if there are no validation errors
+    // then save the user data into a database
+    if (!this.errors.length) {
+      // hash user password
+      let salt = bcrypt.genSaltSync(10);
+      this.data.password = bcrypt.hashSync(this.data.password, salt);
+      await usersCollection.insertOne(this.data);
+      resolve();
+    } else {
+      reject(this.errors);
+    }
+  });
 };
 
 module.exports = User;

@@ -40,19 +40,23 @@ exports.register = function (req, res) {
   // we passed the user info to create the instance
   let user = new User(req.body);
   // we called the register function available to us from the User model
-  user.register();
-  // If there are errors in the user then send the errors obj
-  if (user.errors.length) {
-    // we iterate through the errors array and called the flash method to push each error on the regErrors collection
-    user.errors.forEach(function (error) {
-      req.flash("regErrors", error);
+  user
+    .register()
+    .then(() => {
+      req.session.user = { username: user.data.username };
+      req.session.save(function () {
+        res.redirect("/");
+      });
+    })
+    .catch(regErrors => {
+      // we iterate through the errors array and called the flash method to push each error on the regErrors collection
+      regErrors.forEach(function (error) {
+        req.flash("regErrors", error);
+      });
+      req.session.save(function () {
+        res.redirect("/");
+      });
     });
-    req.session.save(function () {
-      res.redirect("/");
-    });
-  } else {
-    res.send("Congrats, there are no errors.");
-  }
 };
 
 exports.home = function (req, res) {
