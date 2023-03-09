@@ -70,6 +70,7 @@ User.prototype.validate = function () {
       let usernameExists = await usersCollection.findOne({
         username: this.data.username,
       });
+      // If the username exists we are going to push an error into our errors collection
       if (usernameExists) {
         this.errors.push("That username is already taken.");
       }
