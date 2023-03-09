@@ -43,6 +43,7 @@ exports.register = function (req, res) {
   user
     .register()
     .then(() => {
+      // made the user session with the user that just register
       req.session.user = { username: user.data.username };
       req.session.save(function () {
         res.redirect("/");

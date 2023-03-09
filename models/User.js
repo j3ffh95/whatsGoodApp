@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const usersCollection = require("../db").db().collection("users");
 // This package is use for email and also validating other user inputs
 const validator = require("validator");
+// This package is what gravatar uses for hashing
+const md5 = require("md5");
 
 // Created User class to make a user instance
 let User = function (data) {
@@ -130,6 +132,10 @@ User.prototype.register = function () {
       reject(this.errors);
     }
   });
+};
+
+User.prototype.getAvatar = function () {
+  this.avatar = `https://gravatar.com/avatar/email?s=128`;
 };
 
 module.exports = User;
