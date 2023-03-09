@@ -53,6 +53,7 @@ exports.register = function (req, res) {
       regErrors.forEach(function (error) {
         req.flash("regErrors", error);
       });
+      // Manually telling session to save
       req.session.save(function () {
         res.redirect("/");
       });
