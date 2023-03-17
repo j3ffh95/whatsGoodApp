@@ -23,7 +23,7 @@ Post.prototype.cleanUp = function () {
     title: this.data.title.trim(),
     body: this.data.body.trim(),
     createdDate: new Date(),
-    author: this.userid,
+    author: new ObjectId(this.userid),
   };
 };
 
