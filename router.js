@@ -21,6 +21,7 @@ router.post(
   userController.mustBeLoggedIn,
   postController.create
 );
+router.get("/post/:id", postController.viewSingle);
 
 // Export the router to be used in other files
 module.exports = router;
