@@ -22,7 +22,11 @@ exports.login = function (req, res) {
     .login()
     .then(function (result) {
       // set the session user with and obj that includes username property
-      req.session.user = { avatar: user.avatar, username: user.data.username };
+      req.session.user = {
+        avatar: user.avatar,
+        username: user.data.username,
+        _id: user.data._id,
+      };
       // manually save the session and redirect to the homepage
       req.session.save(function () {
         res.redirect("/");
@@ -55,7 +59,11 @@ exports.register = function (req, res) {
     .register()
     .then(() => {
       // made the user session with the user that just register
-      req.session.user = { username: user.data.username, avatar: user.avatar };
+      req.session.user = {
+        username: user.data.username,
+        avatar: user.avatar,
+        _id: user.data._id,
+      };
       req.session.save(function () {
         res.redirect("/");
       });

@@ -1,9 +1,13 @@
 // require in the post collection from the database
 const postsCollection = require("../db").db().collection("posts");
 
-let Post = function (data) {
+// require in a mongodb package to transform user id into a mongo object ID
+const ObjectId = require("mongodb").ObjectId;
+
+let Post = function (data, userid) {
   this.data = data;
   this.errors = {};
+  this.userid = userid;
 };
 
 Post.prototype.cleanUp = function () {
@@ -19,6 +23,7 @@ Post.prototype.cleanUp = function () {
     title: this.data.title.trim(),
     body: this.data.body.trim(),
     createdDate: new Date(),
+    author: this.userid,
   };
 };
 
@@ -37,6 +42,15 @@ Post.prototype.create = function () {
     this.validate();
     if (!this.errors.length) {
       // save post into database
+      postsCollection
+        .insertOne(this.data)
+        .then(() => {
+          resolve();
+        })
+        .catch(() => {
+          this.errors.push("Please try again later.");
+          reject(this.errors);
+        });
     } else {
       reject(this.errors);
     }
