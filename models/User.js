@@ -101,6 +101,8 @@ User.prototype.login = function () {
           attemptedUser &&
           bcrypt.compareSync(this.data.password, attemptedUser.password)
         ) {
+          this.data = attemptedUser;
+          this.getAvatar();
           resolve("Congrats!");
         } else {
           // if there is no username in the DB and also if the password does not match
@@ -127,6 +129,7 @@ User.prototype.register = function () {
       let salt = bcrypt.genSaltSync(10);
       this.data.password = bcrypt.hashSync(this.data.password, salt);
       await usersCollection.insertOne(this.data);
+      this.getAvatar();
       resolve();
     } else {
       reject(this.errors);
@@ -135,7 +138,7 @@ User.prototype.register = function () {
 };
 
 User.prototype.getAvatar = function () {
-  this.avatar = `https://gravatar.com/avatar/email?s=128`;
+  this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`;
 };
 
 module.exports = User;

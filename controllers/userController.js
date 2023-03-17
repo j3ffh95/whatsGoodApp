@@ -11,7 +11,7 @@ exports.login = function (req, res) {
     .login()
     .then(function (result) {
       // set the session user with and obj that includes username property
-      req.session.user = { favColor: "blue", username: user.data.username };
+      req.session.user = { avatar: user.avatar, username: user.data.username };
       // manually save the session and redirect to the homepage
       req.session.save(function () {
         res.redirect("/");
@@ -44,7 +44,7 @@ exports.register = function (req, res) {
     .register()
     .then(() => {
       // made the user session with the user that just register
-      req.session.user = { username: user.data.username };
+      req.session.user = { username: user.data.username, avatar: user.avatar };
       req.session.save(function () {
         res.redirect("/");
       });
@@ -66,7 +66,10 @@ exports.home = function (req, res) {
   if (req.session.user) {
     // Rendering the home-dashboard template and passing thru a username obj
     // with the current user session username
-    res.render("home-dashboard", { username: req.session.user.username });
+    res.render("home-dashboard", {
+      username: req.session.user.username,
+      avatar: req.session.user.avatar,
+    });
   } else {
     // Render the home-guest template if the user does not exist
     // also passing the errors obj with the errors flash method - the flash package make
