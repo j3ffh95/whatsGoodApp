@@ -16,6 +16,11 @@ router.get(
   userController.mustBeLoggedIn,
   postController.viewCreateScreen
 );
+router.post(
+  "/create-post",
+  userController.mustBeLoggedIn,
+  postController.create
+);
 
 // Export the router to be used in other files
 module.exports = router;

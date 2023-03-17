@@ -20,6 +20,12 @@ let sessionOptions = session({
 app.use(sessionOptions);
 app.use(flash());
 
+// This code allows us to have the user object available in all our ejs templates
+app.use(function (req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
+
 const router = require("./router");
 
 // HTML Form submit - let express know to add the suer submitted data into our request object,

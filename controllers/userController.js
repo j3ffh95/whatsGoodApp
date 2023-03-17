@@ -77,10 +77,7 @@ exports.home = function (req, res) {
   if (req.session.user) {
     // Rendering the home-dashboard template and passing thru a username obj
     // with the current user session username
-    res.render("home-dashboard", {
-      username: req.session.user.username,
-      avatar: req.session.user.avatar,
-    });
+    res.render("home-dashboard");
   } else {
     // Render the home-guest template if the user does not exist
     // also passing the errors obj with the errors flash method - the flash package make
