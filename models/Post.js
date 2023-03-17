@@ -2,7 +2,7 @@
 const postsCollection = require("../db").db().collection("posts");
 
 // require in a mongodb package to transform user id into a mongo object ID
-const ObjectId = require("mongodb").ObjectId;
+const ObjectID = require("mongodb").ObjectId;
 
 let Post = function (data, userid) {
   this.data = data;
@@ -23,7 +23,7 @@ Post.prototype.cleanUp = function () {
     title: this.data.title.trim(),
     body: this.data.body.trim(),
     createdDate: new Date(),
-    author: new ObjectId(this.userid),
+    author: new ObjectID(this.userid),
   };
 };
 
