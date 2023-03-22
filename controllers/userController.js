@@ -1,3 +1,4 @@
+const Post = require("../models/Post");
 // requiring the file User model to get access of the User Class
 const User = require("../models/User");
 
@@ -111,6 +112,8 @@ exports.ifUserExists = function (req, res, next) {
 };
 
 exports.profilePostsScreen = function (req, res) {
+  // Ask our post model for posts by a certain author id
+
   // We are going to use that profileUser object from the req object to pass the username and avatar
   res.render("profile", {
     profileUsername: req.profileUser.username,
