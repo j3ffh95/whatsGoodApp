@@ -113,10 +113,16 @@ exports.ifUserExists = function (req, res, next) {
 
 exports.profilePostsScreen = function (req, res) {
   // Ask our post model for posts by a certain author id
-
-  // We are going to use that profileUser object from the req object to pass the username and avatar
-  res.render("profile", {
-    profileUsername: req.profileUser.username,
-    profileAvatar: req.profileUser.avatar,
-  });
+  Post.findByAuthorId(req.profileUser._id)
+    .then(function (posts) {
+      // We are going to use that profileUser object from the req object to pass the username and avatar
+      res.render("profile", {
+        posts: posts,
+        profileUsername: req.profileUser.username,
+        profileAvatar: req.profileUser.avatar,
+      });
+    })
+    .catch(function () {
+      res.render("404");
+    });
 };
