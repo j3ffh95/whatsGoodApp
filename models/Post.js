@@ -1,8 +1,11 @@
+const { post } = require("../router");
+
 // require in the post collection from the database
 const postsCollection = require("../db").db().collection("posts");
 
 // require in a mongodb package to transform user id into a mongo object ID
 const ObjectID = require("mongodb").ObjectId;
+const User = require("./User");
 
 let Post = function (data, userid) {
   this.data = data;
@@ -53,6 +56,55 @@ Post.prototype.create = function () {
         });
     } else {
       reject(this.errors);
+    }
+  });
+};
+
+Post.findSingleById = function (id) {
+  return new Promise(async function (resolve, reject) {
+    if (typeof id != "string" || !ObjectID.isValid(id)) {
+      reject();
+      return;
+    }
+    // If the posts collection finds the post from the database then it will be assign to the post variable
+    // the aggregate method allows us to run different mongodb operations
+    let posts = await postsCollection
+      .aggregate([
+        { $match: { _id: new ObjectID(id) } },
+        {
+          $lookup: {
+            from: "users",
+            localField: "author",
+            foreignField: "_id",
+            as: "authorDocument",
+          },
+        },
+        {
+          $project: {
+            title: 1,
+            body: 1,
+            createdDate: 1,
+            author: { $arrayElemAt: ["$authorDocument", 0] },
+          },
+        },
+      ])
+      .toArray();
+
+    //   Clean up author property in each post object
+    posts = posts.map(function (post) {
+      post.author = {
+        username: post.author.username,
+        avatar: new User(post.author, true).avatar,
+      };
+
+      return post;
+    });
+
+    if (posts.length) {
+      console.log(posts[0]);
+      resolve(posts[0]);
+    } else {
+      reject();
     }
   });
 };
