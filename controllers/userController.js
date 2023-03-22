@@ -96,3 +96,24 @@ exports.home = function (req, res) {
     });
   }
 };
+
+exports.ifUserExists = function (req, res, next) {
+  // The findByUsername is going to return a promise
+  User.findByUsername(req.params.username)
+    .then(function (userDocument) {
+      // Here we are goint to set on the req object a profileUser object as the username found
+      req.profileUser = userDocument;
+      next();
+    })
+    .catch(function () {
+      res.render("404");
+    });
+};
+
+exports.profilePostsScreen = function (req, res) {
+  // We are going to use that profileUser object from the req object to pass the username and avatar
+  res.render("profile", {
+    profileUsername: req.profileUser.username,
+    profileAvatar: req.profileUser.avatar,
+  });
+};
