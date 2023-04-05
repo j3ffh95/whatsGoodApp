@@ -8,6 +8,7 @@
         ><small>Title</small></label
       >
       <input
+        value="<%= post.title %>"
         required
         name="title"
         id="post-title"
@@ -28,7 +29,9 @@
         id="post-body"
         class="body-content tall-textarea form-control"
         type="text"
-      ></textarea>
+      >
+<%= post.body %></textarea
+      >
     </div>
 
     <button class="btn btn-primary">Saved Updates</button>
