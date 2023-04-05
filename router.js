@@ -29,6 +29,7 @@ router.post(
   postController.create
 );
 router.get("/post/:id", postController.viewSingle);
+router.get("/post/:id/edit", postController.viewEditScreen);
 
 // Export the router to be used in other files
 module.exports = router;
