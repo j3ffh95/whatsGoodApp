@@ -3,9 +3,8 @@
 
 <div class="container py-md-5">
   <!-- here we are putting the errors array - we are iterating and putting the message -->
-  <% errors.forEach(function(message) { %>
-  <div class="alert alert-danger text-center"><%= message %></div>
-  <% }) %>
+  <!-- include the flash messages -->
+  <%- include('includes/flash') %>
 
   <div class="row align-items-center">
     <div class="col-lg-7 py-3 py-md-5">

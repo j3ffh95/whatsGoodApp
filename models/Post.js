@@ -67,8 +67,8 @@ Post.prototype.update = function () {
       let post = await Post.findSingleById(this.requestedPostId, this.userid);
       if (post.isVisitorOwner) {
         // actually update the db
-        await this.actuallyUpdate();
-        resolve();
+        let status = await this.actuallyUpdate();
+        resolve(status);
       } else {
         reject();
       }
