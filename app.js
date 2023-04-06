@@ -22,6 +22,10 @@ app.use(flash());
 
 // This code allows us to have the user object available in all our ejs templates
 app.use(function (req, res, next) {
+  // make all errors and success flash messages available from all templates
+  res.locals.errors = req.flash("errors");
+  res.locals.success = req.flash("success");
+
   // make current user id available on the req object
   if (req.session.user) {
     req.visitorId = req.session.user._id;

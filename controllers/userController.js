@@ -91,10 +91,7 @@ exports.home = function (req, res) {
     // Render the home-guest template if the user does not exist
     // also passing the errors obj with the errors flash method - the flash package make
     // it easier to delete the errors collection once we called it instead of keeping it in our DB
-    res.render("home-guest", {
-      errors: req.flash("errors"),
-      regErrors: req.flash("regErrors"),
-    });
+    res.render("home-guest", { regErrors: req.flash("regErrors") });
   }
 };
 
