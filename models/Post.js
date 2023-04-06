@@ -60,6 +60,10 @@ Post.prototype.create = function () {
   });
 };
 
+Post.prototype.update = function () {
+  return new Promise((resolve, reject) => {});
+};
+
 Post.reusablePostQuery = function (uniqueOperations, visitorId) {
   return new Promise(async function (resolve, reject) {
     let aggOperations = uniqueOperations.concat([
