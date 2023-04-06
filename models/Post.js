@@ -78,6 +78,23 @@ Post.prototype.update = function () {
   });
 };
 
+Post.prototype.actuallyUpdate = function () {
+  return new Promise(async (resolve, reject) => {
+    this.cleanUp();
+    this.validate();
+    // if there are not validation errors
+    if (!this.errors.length) {
+      await postsCollection.findOneAndUpdate(
+        { _id: new ObjectID(this.requestedPostId) },
+        { $set: { title: this.data.title, body: this.data.body } }
+      );
+      resolve("success");
+    } else {
+      resolve("failure");
+    }
+  });
+};
+
 Post.reusablePostQuery = function (uniqueOperations, visitorId) {
   return new Promise(async function (resolve, reject) {
     let aggOperations = uniqueOperations.concat([
