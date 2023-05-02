@@ -11,9 +11,11 @@ const md5 = require("md5");
 let User = function (data, getAvatar) {
   this.data = data;
   this.errors = [];
+  // If the second parameter was not passed then we just make the getAvatar variable to false
   if (getAvatar == undefined) {
     getAvatar = false;
   }
+  // if its true we going to call the method to get the avatar
   if (getAvatar) {
     this.getAvatar();
   }
@@ -144,6 +146,7 @@ User.prototype.register = function () {
 };
 
 User.prototype.getAvatar = function () {
+  // add the avatar object with the url to the current instance of the User class
   this.avatar = `https://gravatar.com/avatar/${md5(this.data.email)}?s=128`;
 };
 
@@ -156,7 +159,7 @@ User.findByUsername = function (username) {
     usersCollection
       .findOne({ username: username })
       .then(function (userDoc) {
-        let test = "hello";
+        // let test = "hello";
         if (userDoc) {
           // If there is a username in the database then we are going to get the information we need
           // That is the reason we are making a new User instance and also getting the avatar

@@ -99,6 +99,7 @@ Post.reusablePostQuery = function (uniqueOperations, visitorId) {
   return new Promise(async function (resolve, reject) {
     let aggOperations = uniqueOperations.concat([
       {
+        // lookup from another collection
         $lookup: {
           from: "users",
           localField: "author",
@@ -108,6 +109,7 @@ Post.reusablePostQuery = function (uniqueOperations, visitorId) {
       },
       {
         $project: {
+          // 1 means true - to include
           title: 1,
           body: 1,
           createdDate: 1,
@@ -124,6 +126,8 @@ Post.reusablePostQuery = function (uniqueOperations, visitorId) {
       post.isVisitorOwner = post.authorId.equals(visitorId);
       post.author = {
         username: post.author.username,
+        // We create a new instance of the User class and since we want the avatar we just applied the method
+        // get it from that current object
         avatar: new User(post.author, true).avatar,
       };
 

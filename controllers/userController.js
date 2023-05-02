@@ -99,7 +99,7 @@ exports.ifUserExists = function (req, res, next) {
   // The findByUsername is going to return a promise
   User.findByUsername(req.params.username)
     .then(function (userDocument) {
-      // Here we are goint to set on the req object a profileUser object as the username found
+      // Here we are going to set on the req object a profileUser object as the username found
       req.profileUser = userDocument;
       next();
     })
