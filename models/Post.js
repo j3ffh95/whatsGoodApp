@@ -48,8 +48,9 @@ Post.prototype.create = function () {
       // save post into database
       postsCollection
         .insertOne(this.data)
-        .then(() => {
-          resolve();
+        .then(info => {
+          // our create function promise is going to resolve with the newly created podt id
+          resolve(info.insertedId);
         })
         .catch(() => {
           this.errors.push("Please try again later.");
