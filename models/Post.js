@@ -1,9 +1,7 @@
 const { post } = require("../router");
-const sanitize = require("sanitize-html");
-
+const sanitizeHTML = require("sanitize-html");
 // require in the post collection from the database
 const postsCollection = require("../db").db().collection("posts");
-
 // require in a mongodb package to transform user id into a mongo object ID
 const ObjectID = require("mongodb").ObjectId;
 const User = require("./User");
@@ -25,8 +23,16 @@ Post.prototype.cleanUp = function () {
 
   // get rid of any bogus properties
   this.data = {
-    title: this.data.title.trim(),
-    body: this.data.body.trim(),
+    title: sanitizeHTML(this.data.title.trim(), {
+      allowedTags: [],
+      allowedAttributes: {},
+    }),
+    // using the sanitize package the first parameter is what you want to sanitize
+    // second parameter is the configurations you want
+    body: sanitizeHTML(this.data.body.trim(), {
+      allowedTags: [],
+      allowedAttributes: {},
+    }),
     createdDate: new Date(),
     author: new ObjectID(this.userid),
   };
