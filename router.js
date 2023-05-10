@@ -39,6 +39,11 @@ router.post(
   userController.mustBeLoggedIn,
   postController.edit
 );
+router.post(
+  "/post/:id/delete",
+  userController.mustBeLoggedIn,
+  postController.delete
+);
 
 // Export the router to be used in other files
 module.exports = router;
