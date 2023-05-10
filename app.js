@@ -5,6 +5,7 @@ const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
+const markdown = require("marked");
 const app = express();
 
 // We need to create a few configuration options for sessions
