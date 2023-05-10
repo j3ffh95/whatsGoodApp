@@ -1,4 +1,5 @@
 const { post } = require("../router");
+const sanitize = require("sanitize-html");
 
 // require in the post collection from the database
 const postsCollection = require("../db").db().collection("posts");
