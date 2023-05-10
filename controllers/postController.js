@@ -75,3 +75,16 @@ exports.edit = function (req, res) {
       });
     });
 };
+
+exports.delete = function (req, res) {
+  // pass the id from the current post and also the current visitor
+  Post.delete(req.params.id, req.visitorId)
+    .then(() => {
+      req.flash("success", "Post successfully deleted.");
+      req.session.save(() => req.redirect(`/profile/${req.session.username}`));
+    })
+    .catch(() => {
+      req.flash("errors", "You do not have permission to perform that action.");
+      req.session.save(() => req.redirect("/"));
+    });
+};
