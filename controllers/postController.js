@@ -81,10 +81,12 @@ exports.delete = function (req, res) {
   Post.delete(req.params.id, req.visitorId)
     .then(() => {
       req.flash("success", "Post successfully deleted.");
-      req.session.save(() => req.redirect(`/profile/${req.session.username}`));
+      req.session.save(() =>
+        res.redirect(`/profile/${req.session.user.username}`)
+      );
     })
     .catch(() => {
       req.flash("errors", "You do not have permission to perform that action.");
-      req.session.save(() => req.redirect("/"));
+      req.session.save(() => res.redirect("/"));
     });
 };
