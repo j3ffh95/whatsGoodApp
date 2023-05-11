@@ -1,5 +1,5 @@
 export default class Search {
   constructor() {
-    alert("succesfull");
+    alert("succesfuly added search module");
   }
 }
