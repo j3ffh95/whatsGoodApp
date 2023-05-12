@@ -4,6 +4,7 @@ export default class Search {
     this.injectHTML();
     this.headerSearchIcon = document.querySelector(".header-search-icon");
     this.overlay = document.querySelector(".search-overlay");
+    this.close = document.querySelector(".close-live-search");
     this.events();
   }
 
@@ -13,11 +14,20 @@ export default class Search {
       e.preventDefault();
       this.openOverlay();
     });
+
+    this.close.addEventListener("click", e => {
+      e.preventDefault();
+      this.closeOverlay();
+    });
   }
 
   // 3, Methods
   openOverlay() {
-    this.headerSearchIcon.classList.add("search-overlay-visible");
+    this.overlay.classList.add("search-overlay--visible");
+  }
+
+  closeOverlay() {
+    this.overlay.classList.remove("search-overlay--visible");
   }
 
   injectHTML() {
