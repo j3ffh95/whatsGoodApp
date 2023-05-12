@@ -4,7 +4,7 @@ export default class Search {
     this.injectHTML();
     this.headerSearchIcon = document.querySelector(".header-search-icon");
     this.overlay = document.querySelector(".search-overlay");
-    this.close = document.querySelector(".close-live-search");
+    this.closeIcon = document.querySelector(".close-live-search");
     this.events();
   }
 
@@ -15,10 +15,7 @@ export default class Search {
       this.openOverlay();
     });
 
-    this.close.addEventListener("click", e => {
-      e.preventDefault();
-      this.closeOverlay();
-    });
+    this.closeIcon.addEventListener("click", e => this.closeOverlay());
   }
 
   // 3, Methods
