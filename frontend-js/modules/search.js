@@ -29,10 +29,16 @@ export default class Search {
   keyPressHandler() {
     let value = this.inputField.value;
     if (value != "" && value != this.previousValue) {
+      clearTimeout(this.typingWaitTimer);
       this.showLoaderIcon();
+      this.typingWaitTimer = setTimeout(() => this.sendRequest(), 3000);
     }
 
     this.previousValue = value;
+  }
+
+  sendRequest() {
+    alert("send request method just ran.");
   }
 
   showLoaderIcon() {
