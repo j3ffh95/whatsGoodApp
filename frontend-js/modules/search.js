@@ -40,7 +40,12 @@ export default class Search {
   }
 
   sendRequest() {
-    alert("send request method just ran.");
+    axios
+      .post("/search", { searchTerm: this.inputField.value })
+      .then(() => {})
+      .catch(() => {
+        alert("Hello the request failed.");
+      });
   }
 
   showLoaderIcon() {
