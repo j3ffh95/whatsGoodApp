@@ -22,6 +22,7 @@ export default class Search {
   // 3, Methods
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible");
+    setTimeout(() => this.inputField.focus(), 50);
   }
 
   closeOverlay() {
