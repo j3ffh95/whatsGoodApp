@@ -8,6 +8,8 @@ export default class Search {
     this.inputField = document.querySelector("#live-search-field");
     this.resultsArea = document.querySelector(".live-search-results");
     this.loaderIcon = document.querySelector(".circle-loader");
+    this.typingWaitTimer;
+    this.previousValue = "";
     this.events();
   }
 
@@ -23,6 +25,20 @@ export default class Search {
   }
 
   // 3, Methods
+
+  keyPressHandler() {
+    let value = this.inputField.value;
+    if (value != "" && value != this.previousValue) {
+      this.showLoaderIcon();
+    }
+
+    this.previousValue = value;
+  }
+
+  showLoaderIcon() {
+    this.loaderIcon.classList.add("circle-loader--visible");
+  }
+
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible");
     setTimeout(() => this.inputField.focus(), 50);
