@@ -44,6 +44,7 @@ router.post(
   userController.mustBeLoggedIn,
   postController.delete
 );
+router.post("/search", postController.search);
 
 // Export the router to be used in other files
 module.exports = router;
