@@ -138,6 +138,8 @@ Post.reusablePostQuery = function (
     //   Clean up author property in each post object
     posts = posts.map(function (post) {
       post.isVisitorOwner = post.authorId.equals(visitorId);
+      // Get rid of authorId in the post object
+      post.authorId = undefined;
       post.author = {
         username: post.author.username,
         // We create a new instance of the User class and since we want the avatar we just applied the method
