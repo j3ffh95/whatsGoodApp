@@ -90,3 +90,16 @@ exports.delete = function (req, res) {
       req.session.save(() => res.redirect("/"));
     });
 };
+
+exports.search = function (req, res) {
+  // The search function on the Post model is going to return a promise
+  Post.search(req.body.searchTerm)
+    .then(posts => {
+      // Send back a JSON data
+      res.json(posts);
+    })
+    .catch(() => {
+      // Sent back an empty array if it fails
+      res.json([]);
+    });
+};
