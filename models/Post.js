@@ -103,29 +103,35 @@ Post.prototype.actuallyUpdate = function () {
   });
 };
 
-Post.reusablePostQuery = function (uniqueOperations, visitorId) {
+Post.reusablePostQuery = function (
+  uniqueOperations,
+  visitorId,
+  finalOperations = []
+) {
   return new Promise(async function (resolve, reject) {
-    let aggOperations = uniqueOperations.concat([
-      {
-        // lookup from another collection
-        $lookup: {
-          from: "users",
-          localField: "author",
-          foreignField: "_id",
-          as: "authorDocument",
+    let aggOperations = uniqueOperations
+      .concat([
+        {
+          // lookup from another collection
+          $lookup: {
+            from: "users",
+            localField: "author",
+            foreignField: "_id",
+            as: "authorDocument",
+          },
         },
-      },
-      {
-        $project: {
-          // 1 means true - to include
-          title: 1,
-          body: 1,
-          createdDate: 1,
-          authorId: "$author",
-          author: { $arrayElemAt: ["$authorDocument", 0] },
+        {
+          $project: {
+            // 1 means true - to include
+            title: 1,
+            body: 1,
+            createdDate: 1,
+            authorId: "$author",
+            author: { $arrayElemAt: ["$authorDocument", 0] },
+          },
         },
-      },
-    ]);
+      ])
+      .concat(finalOperations);
 
     let posts = await postsCollection.aggregate(aggOperations).toArray();
 
@@ -185,6 +191,23 @@ Post.delete = function (postIdToDelete, currentUserId) {
         reject();
       }
     } catch {
+      reject();
+    }
+  });
+};
+
+Post.search = function (searchTerm) {
+  return new Promise(async (resolve, reject) => {
+    // Making sure that incoming searchTerm is a string of text - prevent malicious users from sending a object or other things
+    if (typeof searchTerm == "string") {
+      // Perform database operation
+      let posts = await Post.reusablePostQuery(
+        [{ $match: { $text: { $search: searchTerm } } }],
+        undefined,
+        [{ $sort: { score: { $meta: "textScore" } } }]
+      );
+      resolve(posts);
+    } else {
       reject();
     }
   });
