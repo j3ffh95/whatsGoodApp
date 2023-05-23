@@ -88,6 +88,14 @@ export default class Search {
     this.loaderIcon.classList.remove("circle-loader--visible");
   }
 
+  showResultsArea() {
+    this.resultsArea.classList.add("live-search-results--visible");
+  }
+
+  hideResultsArea() {
+    this.resultsArea.classList.remove("live-search-results--visible");
+  }
+
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible");
     setTimeout(() => this.inputField.focus(), 50);
