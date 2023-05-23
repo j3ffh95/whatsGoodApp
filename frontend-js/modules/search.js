@@ -84,6 +84,10 @@ export default class Search {
     this.loaderIcon.classList.add("circle-loader--visible");
   }
 
+  hideLoaderIcon() {
+    this.loaderIcon.classList.remove("circle-loader--visible");
+  }
+
   openOverlay() {
     this.overlay.classList.add("search-overlay--visible");
     setTimeout(() => this.inputField.focus(), 50);
