@@ -52,15 +52,18 @@ exports.edit = function (req, res) {
       // the post was successfully updated in the database
       // or user did have permission but there were validation errors
       if (status == "success") {
-        // post was updated in db
+        // post was updated in db - create a flash success message
         req.flash("success", "Post successfully updated.");
         req.session.save(function () {
           res.redirect(`/post/${req.params.id}/edit`);
         });
       } else {
+        // There was validation errors so we are going to iterate through the errors array
+        // from the post object and create a flash message for each of them
         post.errors.forEach(function (error) {
           req.flash("errors", error);
         });
+        // Manually save the session data and redirect them to the same edit page
         req.session.save(function () {
           res.redirect(`/post/${req.params.id}/edit`);
         });

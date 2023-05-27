@@ -74,7 +74,7 @@ Post.prototype.update = function () {
   return new Promise(async (resolve, reject) => {
     try {
       let post = await Post.findSingleById(this.requestedPostId, this.userid);
-      console.log(post);
+      // console.log(post);
       if (post.isVisitorOwner) {
         // actually update the db
         let status = await this.actuallyUpdate();
@@ -139,6 +139,8 @@ Post.reusablePostQuery = function (
 
     //   Clean up author property in each post object
     posts = posts.map(function (post) {
+      // Here we create a isVisitorOwner property and assign it a boolean value
+      // to check if the user signed in is the author of the post
       post.isVisitorOwner = post.authorId.equals(visitorId);
       // Get rid of authorId in the post object
       post.authorId = undefined;
