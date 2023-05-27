@@ -8,7 +8,7 @@ const User = require("./User");
 
 let Post = function (data, userid, requestedPostId) {
   this.data = data;
-  this.errors = {};
+  this.errors = [];
   this.userid = userid;
   this.requestedPostId = requestedPostId;
 };
@@ -51,12 +51,13 @@ Post.prototype.create = function () {
   return new Promise((resolve, reject) => {
     this.cleanUp();
     this.validate();
+    // If there is no errors
     if (!this.errors.length) {
       // save post into database
       postsCollection
         .insertOne(this.data)
         .then(info => {
-          // our create function promise is going to resolve with the newly created podt id
+          // our create function promise is going to resolve with the newly created post id
           resolve(info.insertedId);
         })
         .catch(() => {
@@ -73,6 +74,7 @@ Post.prototype.update = function () {
   return new Promise(async (resolve, reject) => {
     try {
       let post = await Post.findSingleById(this.requestedPostId, this.userid);
+      console.log(post);
       if (post.isVisitorOwner) {
         // actually update the db
         let status = await this.actuallyUpdate();

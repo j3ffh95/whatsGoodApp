@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
   res.locals.errors = req.flash("errors");
   res.locals.success = req.flash("success");
 
-  // make current user id available on the req object
+  // make current user id available on the req object and set it to the property of visitorId
   if (req.session.user) {
     req.visitorId = req.session.user._id;
   } else {
