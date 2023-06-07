@@ -45,7 +45,10 @@ exports.viewEditScreen = async function (req, res) {
 };
 
 exports.edit = function (req, res) {
+  // Making a Post instance with the required information to update it
+  // with the form body data, the visitor id and also the id of the current post
   let post = new Post(req.body, req.visitorId, req.params.id);
+
   post
     .update()
     .then(status => {

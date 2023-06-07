@@ -71,8 +71,10 @@ Post.prototype.create = function () {
 };
 
 Post.prototype.update = function () {
+  // Make this update function return a promise
   return new Promise(async (resolve, reject) => {
     try {
+      // Making sure if the post id is a valid Id
       let post = await Post.findSingleById(this.requestedPostId, this.userid);
       // console.log(post);
       if (post.isVisitorOwner) {
@@ -104,6 +106,8 @@ Post.prototype.actuallyUpdate = function () {
     }
   });
 };
+
+// =========================== STATIC METHODS =============================================
 
 Post.reusablePostQuery = function (
   uniqueOperations,
@@ -157,6 +161,7 @@ Post.reusablePostQuery = function (
   });
 };
 
+// This Static Method finds a post in the DB
 Post.findSingleById = function (id, visitorId) {
   return new Promise(async function (resolve, reject) {
     if (typeof id != "string" || !ObjectID.isValid(id)) {
@@ -179,6 +184,7 @@ Post.findSingleById = function (id, visitorId) {
   });
 };
 
+// This static method finds all posts by the author ID
 Post.findByAuthorId = function (authorId) {
   return Post.reusablePostQuery([
     { $match: { author: authorId } },

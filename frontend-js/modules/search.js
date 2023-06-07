@@ -1,4 +1,5 @@
 import axios from "axios";
+import DOMPurfy from "dompurify";
 
 export default class Search {
   // 1. Select DOM elements, and keep track of any useful data
