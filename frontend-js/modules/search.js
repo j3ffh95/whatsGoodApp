@@ -12,6 +12,8 @@ export default class Search {
     this.resultsArea = document.querySelector(".live-search-results");
     this.loaderIcon = document.querySelector(".circle-loader");
     this.typingWaitTimer;
+    // Setting the previous value of the search input to know if user actually put something
+    // and not just pressed a key thats not a character
     this.previousValue = "";
     this.events();
   }
@@ -30,6 +32,7 @@ export default class Search {
   // 3, Methods
 
   keyPressHandler() {
+    // Setting the variable value to the current value of the input field
     let value = this.inputField.value;
 
     if (value == "") {
@@ -38,10 +41,13 @@ export default class Search {
       this.hideResultsArea();
     }
 
+    // Checks to see if value is not empty and also if the value has changed from the previous value
     if (value != "" && value != this.previousValue) {
+      // Clear the previous timer - resetting the timeout again
       clearTimeout(this.typingWaitTimer);
       this.showLoaderIcon();
       this.hideResultsArea();
+      // adding a setTimeout function to actually wait a time before sending a request, in this case is 750 milliseconds.
       this.typingWaitTimer = setTimeout(() => this.sendRequest(), 750);
     }
 
