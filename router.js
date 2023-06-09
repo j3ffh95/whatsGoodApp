@@ -48,7 +48,11 @@ router.post(
 router.post("/search", postController.search);
 
 // FOllow related Routes
-router.post("/addFollow/:username");
+router.post(
+  "/addFollow/:username",
+  userController.mustBeLoggedIn,
+  followController.addFollow
+);
 
 // Export the router to be used in other files
 module.exports = router;
