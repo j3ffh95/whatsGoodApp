@@ -55,6 +55,7 @@ export default class Search {
   }
 
   sendRequest() {
+    // using axios to send a request
     axios
       .post("/search", { searchTerm: this.inputField.value })
       .then(response => {
