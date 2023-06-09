@@ -46,5 +46,8 @@ router.post(
 );
 router.post("/search", postController.search);
 
+// FOllow related Routes
+router.post("/addFollow/:username");
+
 // Export the router to be used in other files
 module.exports = router;
