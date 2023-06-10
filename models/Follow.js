@@ -4,7 +4,11 @@ let Follow = function (followedUsername, authorId) {
   this.errors = [];
 };
 
-Follow.prototype.cleanUp = function () {};
+Follow.prototype.cleanUp = function () {
+  if (typeof this.followedUsername != "string") {
+    this.followedUsername = "";
+  }
+};
 
 Follow.prototype.validate = function () {};
 
