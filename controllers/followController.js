@@ -7,12 +7,12 @@ exports.addFollow = function (req, res) {
     .create()
     .then(() => {
       req.flash("success", `Successfully followed ${req.params.username}`);
-      res.session.save(() => res.redirect(`/profile/${req.params.username}`));
+      req.session.save(() => res.redirect(`/profile/${req.params.username}`));
     })
     .catch(errors => {
       errors.forEach(error => {
         req.flash("errors", error);
       });
-      res.session.save(() => res.redirect("/"));
+      req.session.save(() => res.redirect("/"));
     });
 };

@@ -1,5 +1,7 @@
-const usersCollection = require('../db').db().collection('users')
-const usersCollection = require('../db').db().collection('users')
+const ObjectID = require("mongodb").ObjectId;
+
+const usersCollection = require("../db").db().collection("users");
+const followsCollection = require("../db").db().collection("follows");
 
 let Follow = function (followedUsername, authorId) {
   this.followedUsername = followedUsername;
@@ -14,16 +16,37 @@ Follow.prototype.cleanUp = function () {
   }
 };
 
-Follow.prototype.validate = function () {
-    // followed username must exist in database
-    let followedAccount = 
+Follow.prototype.validate = async function () {
+  // followed username must exist in database
+  let followedAccount = await usersCollection.findOne({
+    username: this.followedUsername,
+  });
+  this.authorObj = await usersCollection.findOne({
+    _id: new ObjectID(this.authorId),
+  });
+  if (followedAccount) {
+    this.followedId = followedAccount._id;
+  } else {
+    this.errors.push("You cannot follow a user that does not exist.");
+  }
 };
 
 // Create function
 Follow.prototype.create = function () {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     this.cleanUp();
-    this.validate();
+    await this.validate();
+    if (!this.errors.length) {
+      await followsCollection.insertOne({
+        followedId: this.followedId,
+        followedUser: this.followedUsername,
+        authorId: new ObjectID(this.authorId),
+        authorUser: this.authorObj.username,
+      });
+      resolve();
+    } else {
+      reject(this.errors);
+    }
   });
 };
 
