@@ -52,4 +52,6 @@ Follow.prototype.create = function () {
   });
 };
 
+Follow.isVisitorFollowing = async function (followedId, visitorId) {};
+
 module.exports = Follow;

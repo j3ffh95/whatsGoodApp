@@ -5,6 +5,7 @@ const Follow = require("../models/Follow");
 
 exports.sharedProfileData = async function (req, res, next) {
   let isFollowing = false;
+  // the profileUser object is from the function ifUserExists.
   if (req.session.user) {
     isFollowing = await Follow.isVisitorFollowing(
       req.profileUser._id,
