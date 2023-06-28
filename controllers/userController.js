@@ -1,11 +1,19 @@
 const Post = require("../models/Post");
 // requiring the file User model to get access of the User Class
 const User = require("../models/User");
+const Follow = require("../models/Follow");
 
-exports.sharedProfileData = function (req, res, next) {
+exports.sharedProfileData = async function (req, res, next) {
   let isFollowing = false;
   if (req.session.user) {
+    isFollowing = await Follow.isVisitorFollowing(
+      req.profileUser._id,
+      req.visitorId
+    );
   }
+
+  req.isFollowing = isFollowing;
+  next();
 };
 
 exports.mustBeLoggedIn = function (req, res, next) {
