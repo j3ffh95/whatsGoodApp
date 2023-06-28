@@ -47,7 +47,7 @@ router.post(
 );
 router.post("/search", postController.search);
 
-// FOllow related Routes
+// Follow related Routes
 router.post(
   "/addFollow/:username",
   userController.mustBeLoggedIn,

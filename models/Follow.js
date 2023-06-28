@@ -35,8 +35,10 @@ Follow.prototype.validate = async function () {
 Follow.prototype.create = function () {
   return new Promise(async (resolve, reject) => {
     this.cleanUp();
+
     await this.validate();
     if (!this.errors.length) {
+      // Here we are storing a object to the follows collection - the author and user that its going to follow
       await followsCollection.insertOne({
         followedId: this.followedId,
         followedUser: this.followedUsername,
