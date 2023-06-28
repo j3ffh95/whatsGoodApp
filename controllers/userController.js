@@ -2,6 +2,12 @@ const Post = require("../models/Post");
 // requiring the file User model to get access of the User Class
 const User = require("../models/User");
 
+exports.sharedProfileData = function (req, res, next) {
+  let isFollowing = false;
+  if (req.session.user) {
+  }
+};
+
 exports.mustBeLoggedIn = function (req, res, next) {
   if (req.session.user) {
     next();
