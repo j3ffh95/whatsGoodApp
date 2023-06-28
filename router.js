@@ -15,6 +15,7 @@ router.post("/logout", userController.logout);
 router.get(
   "/profile/:username",
   userController.ifUserExists,
+  userController.sharedProfileData,
   userController.profilePostsScreen
 );
 
