@@ -136,7 +136,10 @@ Follow.getFollowersById = function (id) {
 
       followers = followers.map(function (follower) {
         // create a user
+        let user = new User(follower, true);
+        return { username: follower.username, avatar: user.avatar };
       });
+      resolve(followers);
     } catch {
       reject();
     }
