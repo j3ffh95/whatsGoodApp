@@ -114,12 +114,15 @@ exports.register = function (req, res) {
     });
 };
 
-exports.home = function (req, res) {
+exports.home = async function (req, res) {
   // Checking to see is there is a user logged in the session obj
   if (req.session.user) {
+    // Fetch feed of posts for current user
+    let posts = await Post.getFeed(req.session.user._id);
+
     // Rendering the home-dashboard template and passing thru a username obj
     // with the current user session username
-    res.render("home-dashboard");
+    res.render("home-dashboard", { posts: posts });
   } else {
     // Render the home-guest template if the user does not exist
     // also passing the errors obj with the errors flash method - the flash package make
