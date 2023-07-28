@@ -2,6 +2,7 @@ const { post } = require("../router");
 const sanitizeHTML = require("sanitize-html");
 // require in the post collection from the database
 const postsCollection = require("../db").db().collection("posts");
+const followsCollection = require("../db").db().collection("follows");
 // require in a mongodb package to transform user id into a mongo object ID
 const ObjectID = require("mongodb").ObjectId;
 const User = require("./User");
@@ -230,6 +231,13 @@ Post.countPostsByAuthor = function (id) {
     let postCount = await postsCollection.countDocuments({ author: id });
     resolve(postCount);
   });
+};
+
+Post.getFeed = function (id) {
+  return new Promise();
+  // Create an array of the user id's that the current user follows
+
+  // Look for posts where the author is in the above array of followed users
 };
 
 module.exports = Post;
