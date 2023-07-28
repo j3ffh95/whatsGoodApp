@@ -22,7 +22,7 @@ exports.sharedProfileData = async function (req, res, next) {
   let postCountPromise = Post.countPostsByAuthor();
   let followerCountPromise = Follow.countFollowersById();
   let followingCountPromise = Follow.countFollowingById();
-  await Promise.all([
+  let [postCount, followerCount, followingCount] = await Promise.all([
     postCountPromise,
     followerCountPromise,
     followingCountPromise,
