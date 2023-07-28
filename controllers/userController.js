@@ -160,3 +160,20 @@ exports.profileFollowersScreen = async function (req, res) {
     res.render("404");
   }
 };
+
+exports.profileFollowingScreen = async function (req, res) {
+  // The getFollowingById is going to return a promise
+  try {
+    let following = await Follow.getFollowingById(req.profileUser._id);
+
+    res.render("profile-following", {
+      following: following,
+      profileUsername: req.profileUser.username,
+      profileAvatar: req.profileUser.avatar,
+      isFollowing: req.isFollowing,
+      isVisitorsProfile: req.isVisitorsProfile,
+    });
+  } catch {
+    res.render("404");
+  }
+};
