@@ -153,6 +153,11 @@ exports.profilePostsScreen = function (req, res) {
         profileAvatar: req.profileUser.avatar,
         isFollowing: req.isFollowing,
         isVisitorsProfile: req.isVisitorsProfile,
+        counts: {
+          postCount: req.postCount,
+          followerCount: req.followerCount,
+          followingCount: req.followingCount,
+        },
       });
     })
     .catch(function () {
@@ -172,6 +177,11 @@ exports.profileFollowersScreen = async function (req, res) {
       profileAvatar: req.profileUser.avatar,
       isFollowing: req.isFollowing,
       isVisitorsProfile: req.isVisitorsProfile,
+      counts: {
+        postCount: req.postCount,
+        followerCount: req.followerCount,
+        followingCount: req.followingCount,
+      },
     });
   } catch {
     res.render("404");
@@ -190,6 +200,11 @@ exports.profileFollowingScreen = async function (req, res) {
       profileAvatar: req.profileUser.avatar,
       isFollowing: req.isFollowing,
       isVisitorsProfile: req.isVisitorsProfile,
+      counts: {
+        postCount: req.postCount,
+        followerCount: req.followerCount,
+        followingCount: req.followingCount,
+      },
     });
   } catch {
     res.render("404");
