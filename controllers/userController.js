@@ -28,6 +28,10 @@ exports.sharedProfileData = async function (req, res, next) {
     followingCountPromise,
   ]);
 
+  req.postCount = postCount;
+  req.followerCount = followerCount;
+  req.followingCount = followingCount;
+
   next();
 };
 
