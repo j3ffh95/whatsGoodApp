@@ -19,9 +19,9 @@ exports.sharedProfileData = async function (req, res, next) {
   req.isFollowing = isFollowing;
 
   // Retrieve post, follower, and following counts
-  let postCountPromise = Post.countPostsByAuthor();
-  let followerCountPromise = Follow.countFollowersById();
-  let followingCountPromise = Follow.countFollowingById();
+  let postCountPromise = Post.countPostsByAuthor(req.profileUser._id);
+  let followerCountPromise = Follow.countFollowersById(req.profileUser._id);
+  let followingCountPromise = Follow.countFollowingById(req.profileUser._id);
   let [postCount, followerCount, followingCount] = await Promise.all([
     postCountPromise,
     followerCountPromise,
