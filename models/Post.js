@@ -238,8 +238,16 @@ Post.getFeed = async function (id) {
   let followedUsers = await followsCollection
     .find({ authorId: new ObjectID(id) })
     .toArray();
+  followedUsers = followedUsers.map(function (followDoc) {
+    return followDoc.followedId;
+  });
 
-  // Look for posts where the author is in the above array of followed users
+  // Look for posts where the author is in the above array of followedUsers
+  return Post.reusablePostQuery([
+    // Finding all posts where the author value is a value that is in the array of followedUsers
+    { $match: { author: { $in: followedUsers } } },
+    { $sort: { createdDate: -1 } },
+  ]);
 };
 
 module.exports = Post;
