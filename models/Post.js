@@ -233,9 +233,11 @@ Post.countPostsByAuthor = function (id) {
   });
 };
 
-Post.getFeed = function (id) {
-  return new Promise();
+Post.getFeed = async function (id) {
   // Create an array of the user id's that the current user follows
+  let followedUsers = await followsCollection
+    .find({ authorId: new ObjectID(id) })
+    .toArray();
 
   // Look for posts where the author is in the above array of followed users
 };
