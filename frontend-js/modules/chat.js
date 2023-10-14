@@ -1,5 +1,6 @@
 export default class Chat {
   constructor() {
+    this.openYet = false;
     this.chatWrapper = document.querySelector("#chat-wrapper");
     this.openIcon = document.querySelector(".header-chat-icon");
     this.injectHTML();
@@ -27,7 +28,15 @@ export default class Chat {
   }
 
   showChat() {
+    if (!this.openYet) {
+      this.openConnection();
+    }
+    this.openYet = true;
     this.chatWrapper.classList.add("chat--visible");
+  }
+
+  openConnection() {
+    alert("opening a connection");
   }
 
   hideChat() {
