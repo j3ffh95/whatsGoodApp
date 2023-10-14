@@ -36,7 +36,9 @@ export default class Chat {
   }
 
   openConnection() {
-    alert("opening a connection");
+    // This function will open a connection between the browser and our server
+    // We are also assigning it to a variable named socket
+    this.socket = io();
   }
 
   hideChat() {

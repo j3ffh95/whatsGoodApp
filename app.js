@@ -84,8 +84,16 @@ app.set("view engine", "ejs");
 // Let our app know to use that new router we set up
 app.use("/", router);
 
-// Socket
+// Socket ==============================================================================================================
+
 // Creating a server that is going to use our express app as it's handler
 const server = require("http").createServer(app);
 
-module.exports = app;
+const io = require("socket.io")(server);
+
+// Testing to see if the socket connection is working
+io.on("connection", function () {
+  console.log("A new user connected.");
+});
+
+module.exports = server;
