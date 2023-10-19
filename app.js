@@ -94,7 +94,7 @@ const io = require("socket.io")(server);
 // Testing to see if the socket connection is working
 io.on("connection", function (socket) {
   socket.on("chatMessageFromBrowser", function (data) {
-    console.log(data.message);
+    io.emit("chatMessageFromServer", { message: data.message });
   });
 });
 

@@ -54,6 +54,9 @@ export default class Chat {
     // This function will open a connection between the browser and our server
     // We are also assigning it to a variable named socket
     this.socket = io();
+    this.socket.on("chatMessageFromServer", function (data) {
+      alert(data.message);
+    });
   }
 
   hideChat() {
