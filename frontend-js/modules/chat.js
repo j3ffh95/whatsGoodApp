@@ -4,12 +4,17 @@ export default class Chat {
     this.chatWrapper = document.querySelector("#chat-wrapper");
     this.openIcon = document.querySelector(".header-chat-icon");
     this.injectHTML();
+    this.chatField = document.querySelector("#chatField");
+    this.chatForm = document.querySelector("#chatForm");
     this.closeIcon = document.querySelector(".chat-title-bar-close");
     this.events();
   }
 
   // Events
   events() {
+    this.chatForm.addEventListener("submit", e => {
+      e.preventDefault();
+    });
     // An arrow function does not modified the 'this' keyword
     this.openIcon.addEventListener("click", () => this.showChat());
     this.closeIcon.addEventListener("click", () => this.hideChat());
