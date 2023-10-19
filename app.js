@@ -92,8 +92,10 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 // Testing to see if the socket connection is working
-io.on("connection", function () {
-  console.log("A new user connected.");
+io.on("connection", function (socket) {
+  socket.on("chatMessageFromBrowser", function (data) {
+    console.log(data.message);
+  });
 });
 
 module.exports = server;
