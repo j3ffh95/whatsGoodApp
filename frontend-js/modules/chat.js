@@ -14,6 +14,7 @@ export default class Chat {
   events() {
     this.chatForm.addEventListener("submit", e => {
       e.preventDefault();
+      this.sendMessageToServer();
     });
     // An arrow function does not modified the 'this' keyword
     this.openIcon.addEventListener("click", () => this.showChat());
@@ -21,6 +22,15 @@ export default class Chat {
   }
 
   // Methods
+
+  sendMessageToServer() {
+    this.socket.emit("chatMessageFromBrowser", {
+      message: this.chatField.value,
+    });
+    this.chatField.value = "";
+    this.chatField.focus();
+  }
+
   injectHTML() {
     this.chatWrapper.innerHTML = `
     <div class="chat-title-bar">Chat <span class="chat-title-bar-close"><i class="fas fa-times-circle"></i></span></div>
