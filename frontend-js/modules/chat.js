@@ -4,6 +4,7 @@ export default class Chat {
     this.chatWrapper = document.querySelector("#chat-wrapper");
     this.openIcon = document.querySelector(".header-chat-icon");
     this.injectHTML();
+    this.chatLog = document.querySelector("#chat");
     this.chatField = document.querySelector("#chatField");
     this.chatForm = document.querySelector("#chatForm");
     this.closeIcon = document.querySelector(".chat-title-bar-close");
