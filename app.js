@@ -91,11 +91,27 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io")(server);
 
+// express session package to integrate with the socket package
+// the function inside is going to run
+io.use(function (socket, next) {
+  // This code is not worth memorizing because is just making our express session data available
+  // from within the context of socket.io
+  sectionOptions(socket.request, socket.request.res, next);
+});
+
 // Testing to see if the socket connection is working
 io.on("connection", function (socket) {
-  socket.on("chatMessageFromBrowser", function (data) {
-    io.emit("chatMessageFromServer", { message: data.message });
-  });
+  // Only if you are logged in with user session data
+  if (socket.request.session.user) {
+    let user = socket.request.session.user;
+    socket.on("chatMessageFromBrowser", function (data) {
+      io.emit("chatMessageFromServer", {
+        message: data.message,
+        username: user.username,
+        avatar: user.avatar,
+      });
+    });
+  }
 });
 
 module.exports = server;

@@ -55,9 +55,26 @@ export default class Chat {
     // This function will open a connection between the browser and our server
     // We are also assigning it to a variable named socket
     this.socket = io();
-    this.socket.on("chatMessageFromServer", function (data) {
-      alert(data.message);
+    this.socket.on("chatMessageFromServer", data => {
+      this.displayMessageFromServer(data);
     });
+  }
+
+  displayMessageFromServer(data) {
+    this.chatLog.insertAdjacentHTML(
+      "beforeend",
+      `
+    <!-- template for messages from others -->
+    <div class="chat-other">
+      <a href="#"><img class="avatar-tiny" src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"></a>
+      <div class="chat-message"><div class="chat-message-inner">
+        <a href="#"><strong>barksalot:</strong></a>
+        ${data.message}
+      </div></div>
+    </div>
+    <!-- end template-->
+    `
+    );
   }
 
   hideChat() {
