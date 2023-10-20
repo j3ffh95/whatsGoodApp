@@ -96,7 +96,7 @@ const io = require("socket.io")(server);
 io.use(function (socket, next) {
   // This code is not worth memorizing because is just making our express session data available
   // from within the context of socket.io
-  sectionOptions(socket.request, socket.request.res, next);
+  sessionOptions(socket.request, socket.request.res, next);
 });
 
 // Testing to see if the socket connection is working
