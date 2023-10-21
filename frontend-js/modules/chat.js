@@ -43,6 +43,7 @@ export default class Chat {
     <!-- end template-->
     `
     );
+    // This code will make new messages appear and auto scroll to the bottom
     this.chatLog.scrollTop = this.chatLog.scrollHeight;
     this.chatField.value = "";
     this.chatField.focus();
@@ -65,6 +66,9 @@ export default class Chat {
     }
     this.openYet = true;
     this.chatWrapper.classList.add("chat--visible");
+
+    // This code makes the chat field to focus when opening
+    this.chatField.focus();
   }
 
   openConnection() {
@@ -95,6 +99,8 @@ export default class Chat {
     <!-- end template-->
     `
     );
+    // This code will make new messages appear and auto scroll to the bottom
+    this.chatLog.scrollTop = this.chatLog.scrollHeight;
   }
 
   hideChat() {
