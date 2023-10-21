@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 export default class Chat {
   constructor() {
     this.openYet = false;
