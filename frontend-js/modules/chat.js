@@ -32,18 +32,18 @@ export default class Chat {
     });
     this.chatLog.insertAdjacentHTML(
       "beforeend",
-      `
-    <!-- template for your own message -->
-    <div class="chat-self">
-      <div class="chat-message">
-        <div class="chat-message-inner">
-          ${this.chatField.value}
+      DOMPurify.sanitize(`
+      <!-- template for your own message -->
+      <div class="chat-self">
+        <div class="chat-message">
+          <div class="chat-message-inner">
+            ${this.chatField.value}
+          </div>
         </div>
+        <img class="chat-avatar avatar-tiny" src="${this.avatar}">
       </div>
-      <img class="chat-avatar avatar-tiny" src="${this.avatar}">
-    </div>
-    <!-- end template-->
-    `
+      <!-- end template-->
+      `)
     );
     // This code will make new messages appear and auto scroll to the bottom
     this.chatLog.scrollTop = this.chatLog.scrollHeight;
@@ -89,17 +89,17 @@ export default class Chat {
   displayMessageFromServer(data) {
     this.chatLog.insertAdjacentHTML(
       "beforeend",
-      `
-    <!-- template for messages from others -->
-    <div class="chat-other">
-      <a href="/profile/${data.username}"><img class="avatar-tiny" src="${data.avatar}"></a>
-      <div class="chat-message"><div class="chat-message-inner">
-        <a href="#"><strong>${data.username}:</strong></a>
-        ${data.message}
-      </div></div>
-    </div>
-    <!-- end template-->
-    `
+      DOMPurify.sanitize(`
+      <!-- template for messages from others -->
+      <div class="chat-other">
+        <a href="/profile/${data.username}"><img class="avatar-tiny" src="${data.avatar}"></a>
+        <div class="chat-message"><div class="chat-message-inner">
+          <a href="#"><strong>${data.username}:</strong></a>
+          ${data.message}
+        </div></div>
+      </div>
+      <!-- end template-->
+      `)
     );
     // This code will make new messages appear and auto scroll to the bottom
     this.chatLog.scrollTop = this.chatLog.scrollHeight;
