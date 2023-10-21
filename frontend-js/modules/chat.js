@@ -28,6 +28,21 @@ export default class Chat {
     this.socket.emit("chatMessageFromBrowser", {
       message: this.chatField.value,
     });
+    this.chatLog.insertAdjacentHTML(
+      "beforeend",
+      `
+    <!-- template for your own message -->
+    <div class="chat-self">
+      <div class="chat-message">
+        <div class="chat-message-inner">
+          Hello, how are you?
+        </div>
+      </div>
+      <img class="chat-avatar avatar-tiny" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128">
+    </div>
+    <!-- end template-->
+    `
+    );
     this.chatField.value = "";
     this.chatField.focus();
   }
@@ -55,6 +70,10 @@ export default class Chat {
     // This function will open a connection between the browser and our server
     // We are also assigning it to a variable named socket
     this.socket = io();
+    this.socket.on("welcome", data => {
+      this.username = data.username;
+      this.avatar = data.avatar;
+    });
     this.socket.on("chatMessageFromServer", data => {
       this.displayMessageFromServer(data);
     });
