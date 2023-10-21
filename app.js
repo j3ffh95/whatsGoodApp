@@ -104,6 +104,9 @@ io.on("connection", function (socket) {
   // Only if you are logged in with user session data
   if (socket.request.session.user) {
     let user = socket.request.session.user;
+
+    socket.emit("welcome", { username: user.username, avatar: user.avatar });
+
     socket.on("chatMessageFromBrowser", function (data) {
       // Will emit this message to all connected devices except this one
       socket.broadcast.emit("chatMessageFromServer", {
