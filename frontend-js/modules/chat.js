@@ -35,14 +35,15 @@ export default class Chat {
     <div class="chat-self">
       <div class="chat-message">
         <div class="chat-message-inner">
-          Hello, how are you?
+          ${this.chatField.value}
         </div>
       </div>
-      <img class="chat-avatar avatar-tiny" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128">
+      <img class="chat-avatar avatar-tiny" src="${this.avatar}">
     </div>
     <!-- end template-->
     `
     );
+    this.chatLog.scrollTop = this.chatLog.scrollHeight;
     this.chatField.value = "";
     this.chatField.focus();
   }
