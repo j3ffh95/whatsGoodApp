@@ -161,7 +161,7 @@ exports.profilePostsScreen = function (req, res) {
           followerCount: req.followerCount,
           followingCount: req.followingCount,
         },
-        title: `Profile for ${posts[0].author.username}`,
+        title: `Profile for ${req.profileUser.username}`,
       });
     })
     .catch(function () {
