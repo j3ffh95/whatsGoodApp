@@ -161,6 +161,7 @@ exports.profilePostsScreen = function (req, res) {
           followerCount: req.followerCount,
           followingCount: req.followingCount,
         },
+        title: posts[0].author.username,
       });
     })
     .catch(function () {
