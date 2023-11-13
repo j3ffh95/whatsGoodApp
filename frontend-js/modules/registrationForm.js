@@ -5,7 +5,7 @@ export default class RegistrationForm {
     );
     this.insertValidationElements();
     this.username = document.querySelector("#username-register");
-    this.username.previousvalue = "";
+    this.username.previousValue = "";
     this.events();
   }
 
@@ -19,10 +19,10 @@ export default class RegistrationForm {
   // Methods
 
   isDifferent(el, handler) {
-    if (el.previousvalue != el.value) {
+    if (el.previousValue != el.value) {
       handler.call(this);
     }
-    el.previousvalue = el.value;
+    el.previousValue = el.value;
   }
 
   usernameHandler() {
