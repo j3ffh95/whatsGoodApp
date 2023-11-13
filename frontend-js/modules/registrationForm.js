@@ -4,6 +4,7 @@ export default class RegistrationForm {
       "#registration-form .form-control"
     );
     this.insertValidationElements();
+    this.username = document.querySelector("#username-register");
     this.events();
   }
 
@@ -15,7 +16,7 @@ export default class RegistrationForm {
     this.allFields.forEach(function (el) {
       el.insertAdjacentHTML(
         "afterend",
-        '<div class="alert alert-danger small liveValidateMessage liveValidateMessage--visible" >Hello nigga</div>'
+        '<div class="alert alert-danger small liveValidateMessage" ></div>'
       );
     });
   }
