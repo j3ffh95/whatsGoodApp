@@ -2,6 +2,10 @@ import Search from "./modules/search";
 import Chat from "./modules/chat";
 import RegistrationForm from "./modules/registrationForm";
 
+if (document.querySelector("#registration-form")) {
+  new RegistrationForm();
+}
+
 // This if statement checks to see if the header-search-icon exist in the page
 if (document.querySelector(".header-search-icon")) {
   new Search();
