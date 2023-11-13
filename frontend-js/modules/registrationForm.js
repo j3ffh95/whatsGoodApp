@@ -5,13 +5,30 @@ export default class RegistrationForm {
     );
     this.insertValidationElements();
     this.username = document.querySelector("#username-register");
+    this.username.previousvalue = "";
     this.events();
   }
 
   // Events
-  events() {}
+  events() {
+    this.username.addEventListener("keyup", () => {
+      this.isDifferent(this.username, this.usernameHandler);
+    });
+  }
 
   // Methods
+
+  isDifferent(el, handler) {
+    if (el.previousvalue != el.value) {
+      handler.call(this);
+    }
+    el.previousvalue = el.value;
+  }
+
+  usernameHandler() {
+    alert("ffjfj");
+  }
+
   insertValidationElements() {
     this.allFields.forEach(function (el) {
       el.insertAdjacentHTML(
