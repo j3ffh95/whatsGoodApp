@@ -3,6 +3,7 @@ export default class RegistrationForm {
     this.allFields = document.querySelectorAll(
       "#registration-form .form-control"
     );
+    this.insertValidationElements();
     this.events();
   }
 
@@ -10,4 +11,12 @@ export default class RegistrationForm {
   events() {}
 
   // Methods
+  insertValidationElements() {
+    this.allFields.forEach(function (el) {
+      el.insertAdjacentHTML(
+        "afterend",
+        '<div class="alert alert-danger small liveValidateMessage liveValidateMessage--visible" >Hello nigga</div>'
+      );
+    });
+  }
 }
