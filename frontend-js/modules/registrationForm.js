@@ -69,7 +69,14 @@ export default class RegistrationForm {
     el.errors = true;
   }
 
-  usernameAfterDelay() {}
+  usernameAfterDelay() {
+    if (this.username.value.length < 3) {
+      this.showValidationError(
+        this.username,
+        "Username must be at least 3 characters."
+      );
+    }
+  }
 
   insertValidationElements() {
     this.allFields.forEach(function (el) {
