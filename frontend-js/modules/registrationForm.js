@@ -20,13 +20,17 @@ export default class RegistrationForm {
 
   isDifferent(el, handler) {
     if (el.previousValue != el.value) {
+      // We use the method call to make sure the "this" keyword points towards our overall object
       handler.call(this);
     }
     el.previousValue = el.value;
   }
 
   usernameHandler() {
-    alert("ffjfj");
+    // Setting up the skeleton that will run some code immediately and run other code after a delay
+    this.usernameImmediately();
+    clearTimeout(this.username.timer);
+    this.username.timer = setTimeout(() => this.usernameAfterDelay, 3000);
   }
 
   insertValidationElements() {
