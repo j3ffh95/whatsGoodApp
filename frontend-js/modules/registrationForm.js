@@ -27,11 +27,49 @@ export default class RegistrationForm {
   }
 
   usernameHandler() {
+    this.username.errors = false;
     // Setting up the skeleton that will run some code immediately and run other code after a delay
     this.usernameImmediately();
     clearTimeout(this.username.timer);
-    this.username.timer = setTimeout(() => this.usernameAfterDelay, 3000);
+    this.username.timer = setTimeout(() => this.usernameAfterDelay(), 3000);
   }
+
+  usernameImmediately() {
+    // We are using regular expression to check if the username is alpha numeric
+    if (
+      this.username.value != "" &&
+      !/^([a-zA-Z0-9]+)$/.test(this.username.value)
+    ) {
+      this.showValidationError(
+        this.username,
+        "Username can only contain letters and numbers."
+      );
+    }
+
+    // Checking to see if the username exceeds 30 characters
+    if (this.username.value.length > 30) {
+      this.showValidationError(
+        this.username,
+        "Username cannot exceed 30 characters."
+      );
+    }
+
+    if (!this.username.errors) {
+      this.hideValidationError(this.username);
+    }
+  }
+
+  hideValidationError(el) {
+    el.nextElementSibling.classList.remove("liveValidateMessage--visible");
+  }
+
+  showValidationError(el, message) {
+    el.nextElementSibling.innerHTML = message;
+    el.nextElementSibling.classList.add("liveValidateMessage--visible");
+    el.errors = true;
+  }
+
+  usernameAfterDelay() {}
 
   insertValidationElements() {
     this.allFields.forEach(function (el) {
