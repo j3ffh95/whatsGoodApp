@@ -38,6 +38,26 @@ export default class RegistrationForm {
 
   // Methods
 
+  formSubmitHandler() {
+    // Manually run all of our validation checks
+    this.usernameImmediately();
+    this.usernameAfterDelay();
+    this.emailAfterDelay();
+    this.passwordImmediately();
+    this.passwordAfterDelay();
+
+    // If everything is perfect just the way we want it, then we can submit the form
+    if (
+      this.username.isUnique &&
+      !this.username.errors &&
+      this.email.isUnique &&
+      !this.email.errors &&
+      !this.password.errors
+    ) {
+      this.form.submit();
+    }
+  }
+
   isDifferent(el, handler) {
     if (el.previousValue != el.value) {
       // We use the method call to make sure the "this" keyword points towards our overall object
