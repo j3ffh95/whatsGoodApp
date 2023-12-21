@@ -10,6 +10,8 @@ export default class RegistrationForm {
     this.username.previousValue = "";
     this.email = document.querySelector("#email-register");
     this.email.previousValue = "";
+    this.password = document.querySelector("#password-register");
+    this.password.previousValue = "";
     this.events();
   }
 
@@ -58,7 +60,7 @@ export default class RegistrationForm {
       );
     }
 
-    if (!this.email.erros) {
+    if (!this.email.errors) {
       axios
         .post("/doesEmailExist", { email: this.email.value })
         .then(response => {
