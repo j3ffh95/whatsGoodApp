@@ -8,6 +8,8 @@ export default class RegistrationForm {
     this.insertValidationElements();
     this.username = document.querySelector("#username-register");
     this.username.previousValue = "";
+    this.email = document.querySelector("#email-register");
+    this.email.previousValue = "";
     this.events();
   }
 
@@ -15,6 +17,9 @@ export default class RegistrationForm {
   events() {
     this.username.addEventListener("keyup", () => {
       this.isDifferent(this.username, this.usernameHandler);
+    });
+    this.email.addEventListener("keyup", () => {
+      this.isDifferent(this.email, this.emailHandler);
     });
   }
 
@@ -33,7 +38,45 @@ export default class RegistrationForm {
     // Setting up the skeleton that will run some code immediately and run other code after a delay
     this.usernameImmediately();
     clearTimeout(this.username.timer);
-    this.username.timer = setTimeout(() => this.usernameAfterDelay(), 3000);
+    this.username.timer = setTimeout(() => this.usernameAfterDelay(), 800);
+  }
+
+  emailHandler() {
+    this.email.errors = false;
+    // Setting up the skeleton that will run some code immediately and run other code after a delay
+
+    clearTimeout(this.email.timer);
+    this.email.timer = setTimeout(() => this.emailAfterDelay(), 800);
+  }
+
+  emailAfterDelay() {
+    // Using regular expression
+    if (!/^\S+@\S+$/.test(this.email.value)) {
+      this.showValidationError(
+        this.email,
+        "You must provide a valid email address."
+      );
+    }
+
+    if (!this.email.erros) {
+      axios
+        .post("/doesEmailExist", { email: this.email.value })
+        .then(response => {
+          if (response.data) {
+            this.email.isUnique = false;
+            this.showValidationError(
+              this.email,
+              "That email is already being used."
+            );
+          } else {
+            this.email.isUnique = true;
+            this.hideValidationError(this.email);
+          }
+        })
+        .catch(() => {
+          console.log("Please try again later.");
+        });
+    }
   }
 
   usernameImmediately() {
