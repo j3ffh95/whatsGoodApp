@@ -25,6 +25,7 @@ export default class RegistrationForm {
       this.formSubmitHandler();
     });
 
+    // Key Up Event
     this.username.addEventListener("keyup", () => {
       this.isDifferent(this.username, this.usernameHandler);
     });
@@ -32,6 +33,17 @@ export default class RegistrationForm {
       this.isDifferent(this.email, this.emailHandler);
     });
     this.password.addEventListener("keyup", () => {
+      this.isDifferent(this.password, this.passwordHandler);
+    });
+
+    // On Blur Event - runs when you exit off of or when a field loses focus
+    this.username.addEventListener("blur", () => {
+      this.isDifferent(this.username, this.usernameHandler);
+    });
+    this.email.addEventListener("blur", () => {
+      this.isDifferent(this.email, this.emailHandler);
+    });
+    this.password.addEventListener("blur", () => {
       this.isDifferent(this.password, this.passwordHandler);
     });
   }
