@@ -13,6 +13,11 @@ exports.doesUsernameExist = function (req, res) {
     });
 };
 
+exports.doesEmailExist = async function (req, res) {
+  let emailBool = await User.doesEmailExist();
+  res.json(emailBool);
+};
+
 exports.sharedProfileData = async function (req, res, next) {
   let isVisitorsProfile = false;
   let isFollowing = false;
