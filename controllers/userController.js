@@ -14,7 +14,7 @@ exports.doesUsernameExist = function (req, res) {
 };
 
 exports.doesEmailExist = async function (req, res) {
-  let emailBool = await User.doesEmailExist();
+  let emailBool = await User.doesEmailExist(req.body.email);
   res.json(emailBool);
 };
 
