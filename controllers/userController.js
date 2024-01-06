@@ -93,6 +93,21 @@ exports.login = function (req, res) {
     });
 };
 
+exports.apiLogin = function (req, res) {
+  // created a user instance with the current session user
+  // passed the information of the user trying to log in
+  let user = new User(req.body);
+  // we called the login function from the User model - it returns a Promise
+  user
+    .login()
+    .then(function (result) {
+      res.json("Yes! you are logged in.");
+    })
+    .catch(function (e) {
+      res.json("Wrong Password man!");
+    });
+};
+
 exports.logout = function (req, res) {
   req.session.destroy(function () {
     res.redirect("/");
