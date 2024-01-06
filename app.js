@@ -10,6 +10,14 @@ const csrf = require("csurf");
 const app = express();
 const sanitizeHTML = require("sanitize-html");
 
+// HTML Form submit - let express know to add the suer submitted data into our request object,
+// so then we can access it from the request.body
+app.use(express.urlencoded({ extended: false }));
+// Let express know about sending JSON data
+app.use(express.json());
+
+app.use("/api", require("./router-api"));
+
 // We need to create a few configuration options for sessions
 let sessionOptions = session({
   secret: "JavaScript is sooooooooo coool",
@@ -67,12 +75,6 @@ app.use(function (req, res, next) {
 });
 
 const router = require("./router");
-
-// HTML Form submit - let express know to add the suer submitted data into our request object,
-// so then we can access it from the request.body
-app.use(express.urlencoded({ extended: false }));
-// Let express know about sending JSON data
-app.use(express.json());
 
 // Let express know we are using the public folder
 app.use(express.static("public"));
