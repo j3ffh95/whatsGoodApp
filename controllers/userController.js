@@ -2,6 +2,7 @@ const Post = require("../models/Post");
 // requiring the file User model to get access of the User Class
 const User = require("../models/User");
 const Follow = require("../models/Follow");
+const jwt = require("jsonwebtoken");
 
 exports.doesUsernameExist = function (req, res) {
   User.findByUsername(req.body.username)
@@ -94,17 +95,14 @@ exports.login = function (req, res) {
 };
 
 exports.apiLogin = function (req, res) {
-  // created a user instance with the current session user
-  // passed the information of the user trying to log in
   let user = new User(req.body);
-  // we called the login function from the User model - it returns a Promise
   user
     .login()
     .then(function (result) {
-      res.json("Yes! you are logged in.");
+      res.json("Good job, that is a real username and password.");
     })
     .catch(function (e) {
-      res.json("Wrong Password man!");
+      res.json("Sorry, your values are not correct.");
     });
 };
 
