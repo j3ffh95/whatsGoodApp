@@ -14,6 +14,7 @@ apiRouter.delete(
   userController.apiMustBeLoggedIn,
   postController.apiDelete
 );
+apiRouter.get("/postsByAuthor/:username", userController.apiGetPostsByUsername);
 
 module.exports = apiRouter;
 
