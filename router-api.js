@@ -2,6 +2,10 @@ const apiRouter = require("express").Router();
 const userController = require("./controllers/userController");
 const postController = require("./controllers/postController");
 const followController = require("./controllers/followController");
+const cors = require("cors");
+
+// This makes the api accept all the CORS - Cross Origin Resource Share Policy
+apiRouter.use(cors());
 
 apiRouter.post("/login", userController.apiLogin);
 apiRouter.post(
