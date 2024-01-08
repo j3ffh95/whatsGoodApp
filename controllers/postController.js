@@ -111,6 +111,16 @@ exports.delete = function (req, res) {
     });
 };
 
+exports.apiDelete = function (req, res) {
+  Post.delete(req.params.id, req.apiUser._id)
+    .then(() => {
+      res.json("success!");
+    })
+    .catch(() => {
+      res.json("You do not have permission to perform that action");
+    });
+};
+
 exports.search = function (req, res) {
   // The search function on the Post model is going to return a promise
   Post.search(req.body.searchTerm)
