@@ -60,7 +60,6 @@ Post.prototype.create = async function () {
       return info.insertedId;
     } catch (err) {
       this.errors.push("Please try again later.");
-      reject(this.errors);
       throw this.errors;
     }
     // using Promise instead of Async Await

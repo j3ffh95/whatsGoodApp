@@ -4,20 +4,29 @@ exports.viewCreateScreen = function (req, res) {
   res.render("create-post");
 };
 
-exports.create = function (req, res) {
+exports.create = async function (req, res) {
   // assign post to a new instance of the Post model and passed in the form information
   let post = new Post(req.body, req.session.user._id);
 
-  post
-    .create()
-    .then(function (newId) {
-      req.flash("success", "New post successfully created.");
-      req.session.save(() => res.redirect(`/post/${newId}`));
-    })
-    .catch(function (errors) {
-      errors.forEach(error => req.flash("errors", error));
-      req.session.save(() => res.redirect("/create-post"));
-    });
+  try {
+    const newId = await post.create();
+    req.flash("success", "New post successfully created.");
+    req.session.save(() => res.redirect(`/post/${newId}`));
+  } catch (errors) {
+    errors.forEach(error => req.flash("errors", error));
+    req.session.save(() => res.redirect("/create-post"));
+  }
+
+  // post
+  //   .create()
+  //   .then(function (newId) {
+  //     req.flash("success", "New post successfully created.");
+  //     req.session.save(() => res.redirect(`/post/${newId}`));
+  //   })
+  //   .catch(function (errors) {
+  //     errors.forEach(error => req.flash("errors", error));
+  //     req.session.save(() => res.redirect("/create-post"));
+  //   });
 };
 
 exports.apiCreate = function (req, res) {
