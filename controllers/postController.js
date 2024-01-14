@@ -138,19 +138,30 @@ exports.edit = async function (req, res) {
     });
 };
 
-exports.delete = function (req, res) {
-  // pass the id from the current post and also the current visitor
-  Post.delete(req.params.id, req.visitorId)
-    .then(() => {
-      req.flash("success", "Post successfully deleted.");
-      req.session.save(() =>
-        res.redirect(`/profile/${req.session.user.username}`)
-      );
-    })
-    .catch(() => {
-      req.flash("errors", "You do not have permission to perform that action.");
-      req.session.save(() => res.redirect("/"));
-    });
+exports.delete = async function (req, res) {
+  try {
+    await Post.delete(req.params.id, req.visitorId);
+    req.flash("success", "Post successfully deleted.");
+    req.session.save(() =>
+      res.redirect(`/profile/${req.session.user.username}`)
+    );
+  } catch (errors) {
+    req.flash("errors", "You do not have permission to perform that action.");
+    req.session.save(() => res.redirect("/"));
+  }
+
+  // // pass the id from the current post and also the current visitor
+  // Post.delete(req.params.id, req.visitorId)
+  //   .then(() => {
+  //     req.flash("success", "Post successfully deleted.");
+  //     req.session.save(() =>
+  //       res.redirect(`/profile/${req.session.user.username}`)
+  //     );
+  //   })
+  //   .catch(() => {
+  //     req.flash("errors", "You do not have permission to perform that action.");
+  //     req.session.save(() => res.redirect("/"));
+  //   });
 };
 
 exports.apiDelete = function (req, res) {
