@@ -29,18 +29,24 @@ exports.create = async function (req, res) {
   //   });
 };
 
-exports.apiCreate = function (req, res) {
+exports.apiCreate = async function (req, res) {
   // assign post to a new instance of the Post model and passed in the form information
   let post = new Post(req.body, req.apiUser._id);
+  try {
+    const newId = await post.create();
+    res.json("Congrats!");
+  } catch (errors) {
+    res.json(errors);
+  }
 
-  post
-    .create()
-    .then(function (newId) {
-      res.json("Congrats!");
-    })
-    .catch(function (errors) {
-      res.json(errors);
-    });
+  // post
+  //   .create()
+  //   .then(function (newId) {
+  //     res.json("Congrats!");
+  //   })
+  //   .catch(function (errors) {
+  //     res.json(errors);
+  //   });
 };
 
 exports.viewSingle = async function (req, res) {
