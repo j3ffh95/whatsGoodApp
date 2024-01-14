@@ -49,27 +49,34 @@ Post.prototype.validate = function () {
   }
 };
 
-Post.prototype.create = function () {
-  return new Promise((resolve, reject) => {
-    this.cleanUp();
-    this.validate();
-    // If there is no errors
-    if (!this.errors.length) {
-      // save post into database
-      postsCollection
-        .insertOne(this.data)
-        .then(info => {
-          // our create function promise is going to resolve with the newly created post id
-          resolve(info.insertedId);
-        })
-        .catch(() => {
-          this.errors.push("Please try again later.");
-          reject(this.errors);
-        });
-    } else {
+Post.prototype.create = async function () {
+  this.cleanUp();
+  this.validate();
+  // If there is no errors
+  if (!this.errors.length) {
+    // save post into database
+    try {
+      const info = await postsCollection.insertOne(this.data);
+      return info.insertedId;
+    } catch (err) {
+      this.errors.push("Please try again later.");
       reject(this.errors);
+      throw this.errors;
     }
-  });
+    // using Promise instead of Async Await
+    // postsCollection
+    //   .insertOne(this.data)
+    //   .then(info => {
+    //     // our create function promise is going to resolve with the newly created post id
+    //     resolve(info.insertedId);
+    //   })
+    //   .catch(() => {
+    //     this.errors.push("Please try again later.");
+    //     reject(this.errors);
+    //   });
+  } else {
+    throw this.errors;
+  }
 };
 
 Post.prototype.update = function () {
