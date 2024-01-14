@@ -164,25 +164,37 @@ exports.delete = async function (req, res) {
   //   });
 };
 
-exports.apiDelete = function (req, res) {
-  Post.delete(req.params.id, req.apiUser._id)
-    .then(() => {
-      res.json("success!");
-    })
-    .catch(() => {
-      res.json("You do not have permission to perform that action");
-    });
+exports.apiDelete = async function (req, res) {
+  try {
+    await Post.delete(req.params.id, req.apiUser._id);
+    res.json("success!");
+  } catch {
+    res.json("You do not have permission to perform that action");
+  }
+  // Post.delete(req.params.id, req.apiUser._id)
+  //   .then(() => {
+  //     res.json("success!");
+  //   })
+  //   .catch(() => {
+  //     res.json("You do not have permission to perform that action");
+  //   });
 };
 
-exports.search = function (req, res) {
-  // The search function on the Post model is going to return a promise
-  Post.search(req.body.searchTerm)
-    .then(posts => {
-      // Send back a JSON data
-      res.json(posts);
-    })
-    .catch(() => {
-      // Sent back an empty array if it fails
-      res.json([]);
-    });
+exports.search = async function (req, res) {
+  try {
+    const posts = await Post.search(req.body.searchTerm);
+    res.json(posts);
+  } catch {
+    res.json([]);
+  }
+  // // The search function on the Post model is going to return a promise
+  // Post.search(req.body.searchTerm)
+  //   .then(posts => {
+  //     // Send back a JSON data
+  //     res.json(posts);
+  //   })
+  //   .catch(() => {
+  //     // Sent back an empty array if it fails
+  //     res.json([]);
+  //   });
 };
